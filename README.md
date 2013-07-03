@@ -14,6 +14,9 @@ Platform
 Cookbooks
 ---------
 
+* apt
+* ssh_known_hosts
+
 Attributes
 ==========
 

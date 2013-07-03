@@ -9,7 +9,7 @@ version          "0.0.1"
 	supports os
 end
 
-%w{ }.each do |ressource|
+%w{ apt ssh_known_hosts }.each do |ressource|
 	depends ressource
 end
 

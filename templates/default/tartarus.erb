@@ -5,5 +5,5 @@
 source <%= node['tartarus']['config_path'] %>/generic.inc
 # Name des Sicherungsprofils
 NAME="<%= @name %>"
-DIRECTORY="<%= <%= @directory %> %>"
-INCREMENTAL_TIMESTAMP_FILE="/var/spool/tartarus/timestamps/<%= @name %>"
+DIRECTORY="<%= @directory %>"
+INCREMENTAL_TIMESTAMP_FILE="<%= node['tartarus']['timestamps_dir'] %>/<%= @name %>"

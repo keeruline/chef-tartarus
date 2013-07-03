@@ -32,3 +32,52 @@ end
 %w{ tartarus tar bzip2 lvm2 gnupg curl }.each do |pkg|
 	package pkg
 end
+
+file node['tartarus']['ENCRYPT_PASSPHRASE_FILE'] do
+	content node['tartarus']['ENCRYPT_PASSPHRASE']
+	mode 0400
+	action :create_if_missing
+end
+
+template "#{node['tartarus']['config_path']}/generic.inc" do
+	source "tartarus.generic.erb"
+	variables(
+		:params => node
+	)
+	owner "root"
+	group "root"
+	mode 0644
+end
+
+ssh_known_hosts_entry node['tartarus']['STORAGE_FTP_SERVER']
+
+directory node['tartarus']['timestamps_dir']
+
+node['tartarus']['backups'].each do |backup|
+	template "#{node['tartarus']['config_path']}/#{backup['name']}.conf" do
+		source "tartarus.erb"
+		variables(
+			:name => backup['name'],
+			:directory => backup['directory']
+		)
+		owner "root"
+		group "root"
+		mode 0644
+	end
+end
+
+template "/usr/sbin/run_tartarus" do
+	source "tartarus.run.erb"
+	variables(
+		:params => node
+	)
+	owner "root"
+	group "root"
+	mode 0755
+end
+
+cron "run_tartarus_backup" do
+	hour node['tartarus']['cron']['time_hour']
+	minute node['tartarus']['cron']['time_minute']
+	command "/usr/sbin/run_tartarus"
+end

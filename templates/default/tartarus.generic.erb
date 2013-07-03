@@ -3,29 +3,15 @@
 #
 
 STORAGE_METHOD="FTP"
-# Adresse des FTP-Server
 STORAGE_FTP_SERVER="<%= node['tartarus']['STORAGE_FTP_SERVER'] %>"
-# FTP-Zugangsdaten
 STORAGE_FTP_USER="<%= node['tartarus']['STORAGE_FTP_USER'] %>"
 STORAGE_FTP_PASSWORD="<%= node['tartarus']['STORAGE_FTP_PASSWORD'] %>"
-# Übertragung verschlüsseln und SFTP verwenden
 STORAGE_FTP_USE_SFTP="<%= node['tartarus']['STORAGE_FTP_USE_SFTP'] %>"
-
-# Kompression
 COMPRESSION_METHOD="<%= node['tartarus']['COMPRESSION_METHOD'] %>"
-# Grö?~_e des LVM-Snapshots
-LVM_SNAPSHOT_SIZE="<%= node['tartarus']['LVM_SNAPSHOT_SIZE'] %>"
-
-# Backup-Daten symmetrisch verschlüsseln
 ENCRYPT_SYMMETRICALLY="<%= node['tartarus']['ENCRYPT_SYMMETRICALLY'] %>"
-# Passwort aus /etc/tartarus/backup.sec lesen
 ENCRYPT_PASSPHRASE_FILE="<%= node['tartarus']['ENCRYPT_PASSPHRASE_FILE'] %>"
-
-# Während der Erstellung der Sicherung nicht über
-# Dateisystemgrenzen hinausgehen
 STAY_IN_FILESYSTEM="<%= node['tartarus']['STAY_IN_FILESYSTEM'] %>"
 
-# FTP-Server nach der Sicherung aufräumen
 TARTARUS_PRE_PROCESS_HOOK() {
     echo -n "$STORAGE_FTP_PASSWORD" | perl /usr/sbin/charon.ftp \
     --host "$STORAGE_FTP_SERVER" \
