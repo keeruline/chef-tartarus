@@ -1,0 +1,6 @@
+#!/bin/sh
+# Run all backup profile found in /etc/tartarus/ and pass
+# command line arguments on to tartarus (e.g. -i)
+for profile in /etc/tartarus/*.conf; do
+	/usr/sbin/tartarus $* "$profile"
+done
