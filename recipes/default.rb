@@ -18,13 +18,9 @@
 # limitations under the License.
 #
 
-#
-# Cookbook Name:: dop_main
-# Recipe:: php
-#
-
 apt_repository "wertarbyte" do
 	uri "http://wertarbyte.de/apt"
+	components ["tartarus"]
 	key "http://wertarbyte.de/apt/software-key.gpg"
 	action :add
 end
