@@ -28,8 +28,6 @@ end
 	package pkg
 end
 
-#ssh_known_hosts_entry node['tartarus']['STORAGE_FTP_SERVER']
-
 directory node['tartarus']['config_path']
 directory node['tartarus']['timestamps_dir']
 

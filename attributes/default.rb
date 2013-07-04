@@ -14,6 +14,7 @@ node.default['tartarus']['STORAGE_FTP_SERVER'] = node['tartarus']['databag']['ST
 node.default['tartarus']['STORAGE_FTP_USER'] = node['tartarus']['databag']['STORAGE_FTP_USER']
 node.default['tartarus']['STORAGE_FTP_PASSWORD'] = node['tartarus']['databag']['STORAGE_FTP_PASSWORD']
 node.default['tartarus']['STORAGE_FTP_USE_SFTP'] = "yes"
+node.default['tartarus']['STORAGE_FTP_SSL_INSECURE'] = "yes"
 node.default['tartarus']['COMPRESSION_METHOD'] = "gzip"
 node.default['tartarus']['ENCRYPT_SYMMETRICALLY'] = "yes"
 node.default['tartarus']['ENCRYPT_PASSPHRASE_FILE'] = "#{node['tartarus']['config_path']}/backup.sec"
