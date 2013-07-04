@@ -19,8 +19,7 @@
 #
 
 apt_repository "wertarbyte" do
-	uri "http://wertarbyte.de/apt"
-	components ["tartarus"]
+	uri "http://wertarbyte.de/apt ./"
 	key "http://wertarbyte.de/apt/software-key.gpg"
 	action :add
 end
