@@ -28,6 +28,11 @@ end
 	package pkg
 end
 
+#ssh_known_hosts_entry node['tartarus']['STORAGE_FTP_SERVER']
+
+directory node['tartarus']['config_path']
+directory node['tartarus']['timestamps_dir']
+
 file node['tartarus']['ENCRYPT_PASSPHRASE_FILE'] do
 	content node['tartarus']['ENCRYPT_PASSPHRASE']
 	mode 0400
@@ -43,10 +48,6 @@ template "#{node['tartarus']['config_path']}/generic.inc" do
 	group "root"
 	mode 0644
 end
-
-ssh_known_hosts_entry node['tartarus']['STORAGE_FTP_SERVER']
-
-directory node['tartarus']['timestamps_dir']
 
 node['tartarus']['backups'].each do |backup|
 	template "#{node['tartarus']['config_path']}/#{backup['name']}.conf" do
