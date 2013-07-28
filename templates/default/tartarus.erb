@@ -2,8 +2,211 @@
 # Local modifications will be overwritten.
 #
 
-source <%= node['tartarus']['config_path'] %>/generic.inc
-# Name des Sicherungsprofils
-NAME="<%= @name %>"
-DIRECTORY="<%= @directory %>"
-INCREMENTAL_TIMESTAMP_FILE="<%= node['tartarus']['timestamps_dir'] %>/<%= @name %>"
+NAME="<%= @tartarus.name %>"
+DIRECTORY="<%= @tartarus.directory %>"
+<% if @tartarus.stay_in_filesystem %>
+STAY_IN_FILESYSTEM="yes"
+<% end %>
+<% if @tartarus.create_lvm_snapshot %>
+CREATE_LVM_SNAPSHOT="yes"
+<% end %>
+<% if @tartarus.lvm_volume_name != nil %>
+LVM_VOLUME_NAME="<%= @tartarus.lvm_volume_name %>"
+<% end %>
+<% if @tartarus.snapshot_dir != nil %>
+SNAPSHOT_DIR="<%= @tartarus.snapshot_dir %>"
+<% end %>
+<% if @tartarus.lvm_mount_options != nil %>
+LVM_MOUNT_OPTIONS="<%= @tartarus.lvm_mount_options %>"
+<% end %>
+<% if @tartarus.lvm_snapshot_size != nil %>
+LVM_SNAPSHOT_SIZE="<%= @tartarus.lvm_snapshot_size %>"
+<% end %>
+<% if @tartarus.assembly_method != nil %>
+ASSEMBLY_METHOD="<%= @tartarus.assembly_method %>"
+<% end %>
+<% if @tartarus.tar_options != nil %>
+TAR_OPTIONS="<%= @tartarus.tar_options %>"
+<% end %>
+<% if @tartarus.compression_method != nil %>
+COMPRESSION_METHOD="<%= @tartarus.compression_method %>"
+<% end %>
+<% if @tartarus.storage_method != nil %>
+STORAGE_METHOD="<%= @tartarus.storage_method %>"
+<% end %>
+<% if @tartarus.storage_file_dir != nil %>
+STORAGE_FILE_DIR="<%= @tartarus.storage_file_dir %>"
+<% end %>
+<% if @tartarus.storage_ftp_server != nil %>
+STORAGE_FTP_SERVER="<%= @tartarus.storage_ftp_server %>"
+<% end %>
+<% if @tartarus.storage_ftp_dir != nil %>
+STORAGE_FTP_DIR="<%= @tartarus.storage_ftp_dir %>"
+<% end %>
+<% if @tartarus.storage_ftp_user != nil %>
+STORAGE_FTP_USER="<%= @tartarus.storage_ftp_user %>"
+<% end %>
+<% if @tartarus.storage_ftp_password != nil %>
+STORAGE_FTP_PASSWORD="<%= @tartarus.storage_ftp_password %>"
+<% end %>
+<% if @tartarus.storage_ftp_use_ssl %>
+STORAGE_FTP_USE_SSL="yes"
+<% end %>
+<% if @tartarus.storage_ftp_ssl_insecure %>
+STORAGE_FTP_SSL_INSECURE="yes"
+<% end %>
+<% if @tartarus.storage_ftp_use_sftp %>
+STORAGE_FTP_USE_SFTP="yes"
+<% end %>
+<% if @tartarus.storage_chunk_size != nil %>
+STORAGE_CHUNK_SIZE="<%= @tartarus.storage_chunk_size %>"
+<% end %>
+INCREMENTAL_TIMESTAMP_FILE="<%= node['tartarus']['timestamps_path'] %>/<%= @tartarus.name %>"
+<% if @tartarus.incremental_stacking %>
+INCREMENTAL_STACKING="yes"
+<% end %>
+<% if @tartarus.exclude != nil %>
+EXCLUDE="<%= @tartarus.exclude %>"
+<% end %>
+<% if @tartarus.exclude_files != nil %>
+EXCLUDE_FILES="<%= @tartarus.exclude_files %>"
+<% end %>
+<% if @tartarus.exclude_filename_patterns != nil %>
+EXCLUDE_FILENAME_PATTERNS="<%= @tartarus.exclude_filename_patterns %>"
+<% end %>
+<% if @tartarus.encrypt_symmetrically %>
+ENCRYPT_SYMMETRICALLY="yes"
+<% end %>
+<% if @tartarus.encrypt_symmetrically != nil %>
+ENCRYPT_PASSPHRASE_FILE="<%= node['tartarus']['config_path'] %>/<%= @tartarus.name %>.sec"
+<% end %>
+<% if @tartarus.encrypt_asymmetrically %>
+ENCRYPT_ASYMMETRICALLY="yes"
+<% end %>
+<% if @tartarus.encrypt_key_id != nil %>
+ENCRYPT_KEY_ID="<%= @tartarus.encrypt_key_id %>"
+<% end %>
+<% if @tartarus.encrypt_keyring != nil %>
+ENCRYPT_KEYRING="<%= @tartarus.encrypt_keyring %>"
+<% end %>
+<% if @tartarus.encrypt_gpg_options != nil %>
+ENCRYPT_GPG_OPTIONS="<%= @tartarus.encrypt_gpg_options %>"
+<% end %>
+<% if @tartarus.limit_disk_io %>
+LIMIT_DISK_IO="yes"
+<% end %>
+<% if @tartarus.check_for_update %>
+CHECK_FOR_UPDATE="yes"
+<% end %>
+<% if @tartarus.file_list_creation %>
+FILE_LIST_CREATION="yes"
+<% end %>
+<% if @tartarus.file_list_directory != nil %>
+FILE_LIST_DIRECTORY="<%= @tartarus.file_list_directory %>"
+<% end %>
+
+<% if @tartarus.pre_process_hook != nil %>
+TARTARUS_PRE_PROCESS_HOOK() {
+<%= render @tartarus.pre_process_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_process_hook != nil %>
+TARTARUS_POST_PROCESS_HOOK() {
+<%= render @tartarus.post_process_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_configverify_hook != nil %>
+TARTARUS_PRE_CONFIGVERIFY_HOOK() {
+<%= render @tartarus.pre_configverify_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_configverify_hook != nil %>
+TARTARUS_POST_CONFIGVERIFY_HOOK() {
+<%= render @tartarus.post_configverify_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_cleanup_hook != nil %>
+TARTARUS_PRE_CLEANUP_HOOK() {
+<%= render @tartarus.pre_cleanup_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_cleanup_hook != nil %>
+TARTARUS_POST_CLEANUP_HOOK() {
+<%= render @tartarus.post_cleanup_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_freeze_hook != nil %>
+TARTARUS_PRE_FREEZE_HOOK() {
+<%= render @tartarus.pre_freeze_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_freeze_hook != nil %>
+TARTARUS_POST_FREEZE_HOOK() {
+<%= render @tartarus.post_freeze_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_store_hook != nil %>
+TARTARUS_PRE_STORE_HOOK() {
+<%= render @tartarus.pre_store_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_store_hook != nil %>
+TARTARUS_POST_STORE_HOOK() {
+<%= render @tartarus.post_store_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.debug_hook != nil %>
+TARTARUS_DEBUG_HOOK() {
+<%= render @tartarus.debug_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_find_hook != nil %>
+TARTARUS_PRE_FIND_HOOK() {
+<%= render @tartarus.pre_find_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_find_hook != nil %>
+TARTARUS_POST_FIND_HOOK() {
+<%= render @tartarus.post_find_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_tar_hook != nil %>
+TARTARUS_PRE_TAR_HOOK() {
+<%= render @tartarus.pre_tar_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_find_hook != nil %>
+TARTARUS_POST_FIND_HOOK() {
+<%= render @tartarus.post_find_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_compression_hook != nil %>
+TARTARUS_PRE_COMPRESSION_HOOK() {
+<%= render @tartarus.pre_compression_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_compression_hook != nil %>
+TARTARUS_POST_COMPRESSION_HOOK() {
+<%= render @tartarus.post_compression_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_compression_hook != nil %>
+TARTARUS_PRE_COMPRESSION_HOOK() {
+<%= render @tartarus.pre_compression_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_compression_hook != nil %>
+TARTARUS_POST_COMPRESSION_HOOK() {
+<%= render @tartarus.post_compression_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.pre_storage_hook != nil %>
+TARTARUS_PRE_STORAGE_HOOK() {
+<%= render @tartarus.pre_storage_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>
+<% if @tartarus.post_storage_hook != nil %>
+TARTARUS_POST_STORAGE_HOOK() {
+<%= render @tartarus.post_storage_hook, :cookbook => node['tartarus']['hooks_template_cookbook'] %>
+}
+<% end %>

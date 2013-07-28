@@ -1,6 +1,0 @@
-#!/bin/sh
-# Run all backup profile found in <%= node['tartarus']['config_path'] %>/ and pass
-# command line arguments on to tartarus (e.g. -i)
-for profile in <%= node['tartarus']['config_path'] %>/*.conf; do
-	/usr/sbin/tartarus $* "$profile"
-done

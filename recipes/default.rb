@@ -18,9 +18,9 @@
 # limitations under the License.
 #
 
-apt_repository "wertarbyte" do
-	uri "http://wertarbyte.de/apt ./"
-	key "http://wertarbyte.de/apt/software-key.gpg"
+apt_repository node['tartarus']['apt_repository']['name'] do
+	uri node['tartarus']['apt_repository']['uri']
+	key node['tartarus']['apt_repository']['key']
 	action :add
 end
 
@@ -28,52 +28,13 @@ end
 	package pkg
 end
 
-ssh_known_hosts_entry node['tartarus']['STORAGE_FTP_SERVER']
-
-directory node['tartarus']['config_path']
-directory node['tartarus']['timestamps_dir']
-
-file node['tartarus']['ENCRYPT_PASSPHRASE_FILE'] do
-	content node['tartarus']['ENCRYPT_PASSPHRASE']
-	mode 0400
-	action :create_if_missing
+directory node['tartarus']['config_path'] do
+	recursive true
+	action :create
 end
 
-template "#{node['tartarus']['config_path']}/generic.inc" do
-	source "tartarus.generic.erb"
-	variables(
-		:params => node
-	)
-	owner "root"
-	group "root"
-	mode 0644
-end
-
-node['tartarus']['backups'].each do |backup|
-	template "#{node['tartarus']['config_path']}/#{backup['name']}.conf" do
-		source "tartarus.erb"
-		variables(
-			:name => backup['name'],
-			:directory => backup['directory']
-		)
-		owner "root"
-		group "root"
-		mode 0644
-	end
-end
-
-template "/usr/sbin/run_tartarus" do
-	source "tartarus.run.erb"
-	variables(
-		:params => node
-	)
-	owner "root"
-	group "root"
-	mode 0755
-end
-
-cron "run_tartarus_backup" do
-	hour node['tartarus']['cron']['time_hour']
-	minute node['tartarus']['cron']['time_minute']
-	command "/usr/sbin/run_tartarus"
+directory node['tartarus']['timestamps_path'] do
+	recursive true
+	mode 755
+	action :create
 end
