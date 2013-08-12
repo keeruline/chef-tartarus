@@ -1,6 +1,7 @@
-echo -n "$STORAGE_FTP_PASSWORD" | perl /usr/sbin/charon.ftp \
---host "$STORAGE_FTP_SERVER" \
---user "$STORAGE_FTP_USER" --readpassword \
---maxage 7 \
---truncate \
---all
+#echo -n "$STORAGE_FTP_PASSWORD" | perl /usr/sbin/charon.ftp \
+#--host "$STORAGE_FTP_SERVER" \
+#--user "$STORAGE_FTP_USER" --readpassword \
+#--maxage 7 \
+#--truncate \
+#--all
+exit 0
