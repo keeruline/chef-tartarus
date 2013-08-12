@@ -37,6 +37,7 @@ attribute :check_for_update, :kind_of => [ TrueClass, FalseClass ], :default => 
 attribute :file_list_creation, :kind_of => [ TrueClass, FalseClass ], :default => node['tartarus']['file_list_creation']
 attribute :file_list_directory, :kind_of => String, :default => node['tartarus']['file_list_directory']
 
+attribute :hooks_template_cookbook, :kind_of => String, :default => node['tartarus']['hooks_template_cookbook']
 attribute :pre_process_hook, :kind_of => String, :default => node['tartarus']['pre_process_hook']
 attribute :post_process_hook, :kind_of => String, :default => node['tartarus']['post_process_hook']
 attribute :pre_configverify_hook, :kind_of => String, :default => node['tartarus']['pre_configverify_hook']
