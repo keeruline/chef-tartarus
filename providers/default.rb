@@ -35,6 +35,12 @@ action :add do
 			action :create
 		end
 		
+		file "#{node['tartarus']['timestamps_path']}/#{new_resource.name}" do
+			content ""
+			mode 0644
+			action :create
+		end
+		
 		template "#{node['tartarus']['config_path']}/#{new_resource.name}.conf" do
 			source "tartarus.erb"
 			cookbook "tartarus"

@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of chef-tartarus.
 
+## 1.0.1:
+
+* LWRP should create empty timestamp file;
+
 ## 1.0.0:
 
 * major refactoring: implemented whole functionality with LWRP;
