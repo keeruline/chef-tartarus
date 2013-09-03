@@ -51,6 +51,7 @@ action :add do
 			group "root"
 			mode 0644
 		end
+		cmd << " >/dev/null 2>&1"
 		cron "run_tartarus_profile_#{new_resource.name}" do
 			minute new_resource.cron_minute
 			hour new_resource.cron_hour
